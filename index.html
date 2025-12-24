@@ -33,8 +33,15 @@
       margin: auto;
     }
 
-    h1 { font-size: 3em; margin-bottom: 10px; }
-    .subtitle { font-size: 1.25em; margin-bottom: 35px; }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.25em;
+      margin-bottom: 35px;
+    }
 
     button {
       background: #ffffff;
@@ -49,16 +56,14 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
-    button:hover { transform: scale(1.08); }
+    button:hover {
+      transform: scale(1.08);
+    }
+
     .hidden { display: none; }
 
-    .box {
-      background: rgba(255,255,255,0.18);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
-      margin-top: 30px;
-      animation: fadeIn 1s ease;
+    .fade {
+      animation: fadeIn 1.2s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -66,202 +71,216 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* MEMORY IMAGE */
+    .box {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
+    .memory {
+      position: relative;
+      margin-top: 25px;
+    }
+
     .memory img {
-      width: 260px;
+      width: 240px;
       max-width: 90%;
       border-radius: 18px;
       margin-top: 15px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-      animation: sparklePop 0.8s ease;
     }
 
-    @keyframes sparklePop {
-      0% { transform: scale(0.8); opacity: 0; }
-      60% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); }
-    }
-
-    /* SPARKLES */
+    /* Sparkles */
     .sparkle {
       position: absolute;
-      font-size: 18px;
-      animation: sparkle 1s ease forwards;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 1.2s ease-out forwards;
       pointer-events: none;
     }
 
     @keyframes sparkle {
-      0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-40px) scale(1.8); }
+      0% { transform: scale(0) translateY(0); opacity: 1; }
+      100% { transform: scale(1.5) translateY(-40px); opacity: 0; }
     }
 
-    .hint {
-      font-size: 0.9em;
-      opacity: 0.85;
-      margin-top: 10px;
+    .heart {
+      font-size: 2.8em;
+      margin-top: 20px;
     }
 
-    .heart { font-size: 2.8em; margin-top: 20px; }
-    .signature { margin-top: 25px; font-size: 1.1em; }
+    .signature {
+      margin-top: 25px;
+      font-size: 1.1em;
+    }
   </style>
 </head>
 
 <body>
 
-<canvas id="snow"></canvas>
+  <!-- Snowfall -->
+  <canvas id="snow"></canvas>
 
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+  <!-- Music -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
 
-<div class="container">
-  <h1>Hey Riyu 🎄❤️</h1>
-  <p class="subtitle">This little piece of the internet exists only because you exist in my life 💕</p>
-
-  <button onclick="startExperience()">Tap This 💌</button>
-
-  <div id="message" class="hidden box">
-    <p>
-      Riyu, you are my favorite notification,  
-      my calm in chaos, and my happiest coincidence ✨
+  <div class="container">
+    <h1>Hey Riyu 🎄❤️</h1>
+    <p class="subtitle">
+      This little piece of the internet exists only because you exist in my life, Riyanshi 💕
     </p>
-    <button onclick="showGallery()">Our Little World 📸</button>
-  </div>
 
-  <div id="gallery" class="hidden box" ontouchstart="touchStart(event)" ontouchend="touchEnd(event)">
-    <p id="memoryText"></p>
-    <div class="memory">
-      <img id="memoryImage" src="">
+    <button onclick="startExperience()">Tap This 💌</button>
+
+    <!-- Intro -->
+    <div id="message" class="hidden fade box">
+      <p>
+        Riyu, you are my favorite notification,  
+        my calm in chaos, and my happiest coincidence ✨
+      </p>
+      <p>
+        Every day with you feels like a soft smile I never want to lose 💖
+      </p>
+      <button onclick="showGallery()">Our Little World 📸</button>
     </div>
 
-    <div class="hint">⬅ Swipe left or right ➡</div>
+    <!-- Memories -->
+    <div id="gallery" class="hidden fade box">
+      <p>
+        These memories unlocked one by one…  
+        just like how I slowly fell for you 🥹❤️
+      </p>
 
-    <button onclick="prevMemory()">⬅</button>
-    <button onclick="nextMemory()">➡</button>
+      <button id="btn1" onclick="showMemory(1)">Our First Cosy Meet ☕</button>
 
-    <button onclick="showFinal()">One Last Thing 🎁</button>
-  </div>
+      <div id="m1" class="hidden fade memory">
+        <p>
+          That first cosy meet…  
+          everything felt soft, warm, and quietly perfect 💕
+        </p>
+        <img src="photo1.jpg">
+      </div>
 
-  <div id="final" class="hidden box">
-    <h2>Merry Christmas, Riyu 🎄❤️</h2>
-    <p>You’re my peace, my laughter, my safe place.</p>
-    <p>I promise to always choose you 💕</p>
-    <div class="heart">❤️</div>
-    <div class="signature">
-      Forever yours,<br><strong>Ishaan</strong>
+      <button id="btn2" class="hidden" onclick="showMemory(2)">That Whiskey Date 🥃</button>
+
+      <div id="m2" class="hidden fade memory">
+        <p>
+          Our whiskey date 🥃  
+          laughs a little louder, hearts a little closer ❤️
+        </p>
+        <img src="photo2.jpg">
+      </div>
+
+      <button id="btn3" class="hidden" onclick="showMemory(3)">Top Secret 🤫</button>
+
+      <div id="m3" class="hidden fade memory">
+        <p>
+          This one… 🤫  
+          just two of us, one memory,  
+          and a secret no one else will ever know 💖
+        </p>
+        <img src="photo3.jpg">
+      </div>
+
+      <button id="finalBtn" class="hidden" onclick="showFinal()">One Last Thing 🎁</button>
+    </div>
+
+    <!-- Final -->
+    <div id="final" class="hidden fade box">
+      <h2>Merry Christmas, Riyu 🎄❤️</h2>
+      <p>
+        Riyanshi, you’re my peace, my laughter, my safe place.
+      </p>
+      <p>
+        No matter where life takes us,  
+        I promise to always choose you 💕
+      </p>
+
+      <div class="heart">❤️</div>
+
+      <div class="signature">
+        Forever yours,<br>
+        <strong>Ishaan</strong>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-/* MUSIC */
-let musicStarted = false;
-function startExperience() {
-  if (!musicStarted) {
-    const m = document.getElementById("bgMusic");
-    m.volume = 0.4;
-    m.play();
-    musicStarted = true;
-  }
-  document.getElementById("message").style.display = "block";
-}
+  <script>
+    let musicStarted = false;
 
-/* MEMORIES DATA */
-const memories = [
-  {
-    text: "Our first cosy meet ☕ — soft smiles, nervous laughs, and magic in the air 💕",
-    img: "photo1.jpg"
-  },
-  {
-    text: "That whiskey date 🥃 — louder laughs, closer hearts, unforgettable vibes ❤️",
-    img: "photo2.jpg"
-  },
-  {
-    text: "Top secret 🤫 — just two of us and a memory no one else will ever know 💖",
-    img: "photo3.jpg"
-  }
-];
+    function startExperience() {
+      if (!musicStarted) {
+        const music = document.getElementById("bgMusic");
+        music.volume = 0.4;
+        music.play();
+        musicStarted = true;
+      }
+      document.getElementById("message").style.display = "block";
+    }
 
-let index = 0;
-let startX = 0;
+    function showGallery() {
+      document.getElementById("gallery").style.display = "block";
+    }
 
-function showGallery() {
-  document.getElementById("gallery").style.display = "block";
-  renderMemory();
-}
+    function sparkle(element) {
+      for (let i = 0; i < 15; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.style.left = Math.random() * 200 + "px";
+        s.style.top = Math.random() * 100 + "px";
+        element.appendChild(s);
+        setTimeout(() => s.remove(), 1200);
+      }
+    }
 
-function renderMemory() {
-  document.getElementById("memoryText").innerText = memories[index].text;
-  document.getElementById("memoryImage").src = memories[index].img;
-  createSparkles();
-}
+    function showMemory(num) {
+      const mem = document.getElementById("m" + num);
+      mem.style.display = "block";
+      sparkle(mem);
 
-function nextMemory() {
-  index = (index + 1) % memories.length;
-  renderMemory();
-}
+      if (num === 1) document.getElementById("btn2").style.display = "inline-block";
+      if (num === 2) document.getElementById("btn3").style.display = "inline-block";
+      if (num === 3) document.getElementById("finalBtn").style.display = "inline-block";
+    }
 
-function prevMemory() {
-  index = (index - 1 + memories.length) % memories.length;
-  renderMemory();
-}
+    function showFinal() {
+      document.getElementById("final").style.display = "block";
+    }
 
-/* TOUCH SWIPE */
-function touchStart(e) {
-  startX = e.changedTouches[0].screenX;
-}
+    /* Snowfall */
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d");
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
 
-function touchEnd(e) {
-  let endX = e.changedTouches[0].screenX;
-  if (startX - endX > 50) nextMemory();
-  if (endX - startX > 50) prevMemory();
-}
+    let snowflakes = Array.from({length:120}, () => ({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      r: Math.random()*3+1,
+      d: Math.random()*1+0.5
+    }));
 
-/* SPARKLES */
-function createSparkles() {
-  for (let i = 0; i < 6; i++) {
-    const s = document.createElement("div");
-    s.className = "sparkle";
-    s.innerText = "✨";
-    s.style.left = Math.random() * window.innerWidth + "px";
-    s.style.top = "50%";
-    document.body.appendChild(s);
-    setTimeout(() => s.remove(), 1000);
-  }
-}
-
-/* FINAL */
-function showFinal() {
-  document.getElementById("final").style.display = "block";
-}
-
-/* SNOW */
-const canvas = document.getElementById("snow");
-const ctx = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-let flakes = Array.from({length:120},()=>({
-  x:Math.random()*canvas.width,
-  y:Math.random()*canvas.height,
-  r:Math.random()*3+1,
-  d:Math.random()+0.5
-}));
-
-function snow() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="rgba(255,255,255,0.9)";
-  ctx.beginPath();
-  flakes.forEach(f=>{
-    ctx.moveTo(f.x,f.y);
-    ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
-    f.y+=f.d;
-    if(f.y>canvas.height){f.y=0;f.x=Math.random()*canvas.width;}
-  });
-  ctx.fill();
-  requestAnimationFrame(snow);
-}
-snow();
-</script>
+    function snow() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle="rgba(255,255,255,0.9)";
+      ctx.beginPath();
+      snowflakes.forEach(f=>{
+        ctx.moveTo(f.x,f.y);
+        ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+        f.y+=f.d;
+        if(f.y>canvas.height){f.y=0;f.x=Math.random()*canvas.width;}
+      });
+      ctx.fill();
+      requestAnimationFrame(snow);
+    }
+    snow();
+  </script>
 
 </body>
 </html>
