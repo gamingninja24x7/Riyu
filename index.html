@@ -38,6 +38,13 @@
       margin-bottom: 10px;
     }
 
+    .hint {
+      font-size: 0.95em;
+      opacity: 0.85;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
     .subtitle {
       font-size: 1.25em;
       margin-bottom: 35px;
@@ -104,7 +111,7 @@
     }
 
     @keyframes sparkle {
-      0% { transform: scale(0) translateY(0); opacity: 1; }
+      0% { transform: scale(0); opacity: 1; }
       100% { transform: scale(1.5) translateY(-40px); opacity: 0; }
     }
 
@@ -132,6 +139,10 @@
 
   <div class="container">
     <h1>Hey Riyu 🎄❤️</h1>
+
+    <!-- Sound hint -->
+    <div class="hint">(switch sound on 😉)</div>
+
     <p class="subtitle">
       This little piece of the internet exists only because you exist in my life, Riyanshi 💕
     </p>
@@ -153,37 +164,45 @@
     <!-- Memories -->
     <div id="gallery" class="hidden fade box">
       <p>
-        These memories unlocked one by one…  
-        just like how I slowly fell for you 🥹❤️
+        I hid a few surprises here…  
+        tap gently 🥹❤️
       </p>
 
-      <button id="btn1" onclick="showMemory(1)">Our First Cosy Meet ☕</button>
+      <!-- Button 1 -->
+      <button id="btn1" onclick="showMemory(1, this)">Tap to unlock a memory ✨</button>
 
       <div id="m1" class="hidden fade memory">
         <p>
-          That first cosy meet…  
-          everything felt soft, warm, and quietly perfect 💕
+          Our first cosy meet ☕  
+          when everything felt soft, warm, and quietly perfect 💕
         </p>
         <img src="photo1.jpg">
       </div>
 
-      <button id="btn2" class="hidden" onclick="showMemory(2)">That Whiskey Date 🥃</button>
+      <!-- Button 2 -->
+      <button id="btn2" class="hidden" onclick="showMemory(2, this)">
+        Another little surprise waiting…
+      </button>
 
       <div id="m2" class="hidden fade memory">
         <p>
-          Our whiskey date 🥃  
-          laughs a little louder, hearts a little closer ❤️
+          That whiskey date 🥃  
+          laughs louder, hearts closer,  
+          and a night I’ll always smile about ❤️
         </p>
         <img src="photo2.jpg">
       </div>
 
-      <button id="btn3" class="hidden" onclick="showMemory(3)">Top Secret 🤫</button>
+      <!-- Button 3 -->
+      <button id="btn3" class="hidden" onclick="showMemory(3, this)">
+        This one is dangerous 🤫
+      </button>
 
       <div id="m3" class="hidden fade memory">
         <p>
-          This one… 🤫  
-          just two of us, one memory,  
-          and a secret no one else will ever know 💖
+          Top secret 🤫  
+          just you, me, and a moment  
+          the world will never know 💖
         </p>
         <img src="photo3.jpg">
       </div>
@@ -228,25 +247,34 @@
       document.getElementById("gallery").style.display = "block";
     }
 
-    function sparkle(element) {
+    function sparkle(el) {
       for (let i = 0; i < 15; i++) {
         const s = document.createElement("div");
         s.className = "sparkle";
         s.style.left = Math.random() * 200 + "px";
         s.style.top = Math.random() * 100 + "px";
-        element.appendChild(s);
+        el.appendChild(s);
         setTimeout(() => s.remove(), 1200);
       }
     }
 
-    function showMemory(num) {
+    function showMemory(num, btn) {
       const mem = document.getElementById("m" + num);
       mem.style.display = "block";
       sparkle(mem);
 
+      // Reveal button text (surprise)
+      if (num === 1) btn.innerText = "Our First Cosy Meet ☕";
+      if (num === 2) btn.innerText = "That Whiskey Date 🥃";
+      if (num === 3) btn.innerText = "Top Secret 🤫";
+
+      // Show next button
       if (num === 1) document.getElementById("btn2").style.display = "inline-block";
       if (num === 2) document.getElementById("btn3").style.display = "inline-block";
       if (num === 3) document.getElementById("finalBtn").style.display = "inline-block";
+
+      btn.disabled = true;
+      btn.style.opacity = "0.85";
     }
 
     function showFinal() {
@@ -259,22 +287,25 @@
     canvas.width = innerWidth;
     canvas.height = innerHeight;
 
-    let snowflakes = Array.from({length:120}, () => ({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      r: Math.random()*3+1,
-      d: Math.random()*1+0.5
+    const snowflakes = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 3 + 1,
+      d: Math.random() * 1 + 0.5
     }));
 
     function snow() {
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle="rgba(255,255,255,0.9)";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
       ctx.beginPath();
-      snowflakes.forEach(f=>{
-        ctx.moveTo(f.x,f.y);
-        ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
-        f.y+=f.d;
-        if(f.y>canvas.height){f.y=0;f.x=Math.random()*canvas.width;}
+      snowflakes.forEach(f => {
+        ctx.moveTo(f.x, f.y);
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        f.y += f.d;
+        if (f.y > canvas.height) {
+          f.y = 0;
+          f.x = Math.random() * canvas.width;
+        }
       });
       ctx.fill();
       requestAnimationFrame(snow);
