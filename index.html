@@ -51,13 +51,13 @@
       border-radius: 35px;
       font-size: 1em;
       cursor: pointer;
-      margin-top: 25px;
+      margin-top: 18px;
       transition: all 0.3s ease;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
     button:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
 
     .hidden { display: none; }
@@ -79,11 +79,11 @@
       margin-top: 30px;
     }
 
-    .photos img {
-      width: 220px;
+    .memory img {
+      width: 240px;
       max-width: 90%;
       border-radius: 18px;
-      margin: 10px;
+      margin-top: 15px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     }
 
@@ -101,10 +101,10 @@
 
 <body>
 
-  <!-- Snowfall Canvas -->
+  <!-- Snowfall -->
   <canvas id="snow"></canvas>
 
-  <!-- Background Music (starts on button click) -->
+  <!-- Music -->
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
@@ -117,6 +117,7 @@
 
     <button onclick="startExperience()">Tap This 💌</button>
 
+    <!-- Message -->
     <div id="message" class="hidden fade box">
       <p>
         Riyu, you are my favorite notification,  
@@ -129,21 +130,50 @@
       <button onclick="showGallery()">Our Little World 📸</button>
     </div>
 
+    <!-- Memories -->
     <div id="gallery" class="hidden fade box">
       <p>
-        These moments may look small to the world,  
-        but to me — they mean everything 🥹❤️
+        These memories aren’t just pictures…  
+        they’re feelings I carry with me every day 🥹❤️
       </p>
 
-      <div class="photos">
-        <img src="photo1.jpg">
-        <img src="photo2.jpg">
-        <img src="photo3.jpg">
+      <button onclick="showMemory('m1')">Our First Cosy Meet ☕</button>
+      <button onclick="showMemory('m2')">That Whiskey Date 🥃</button>
+      <button onclick="showMemory('m3')">Top Secret 🤫</button>
+
+      <!-- Memory 1 -->
+      <div id="m1" class="hidden fade memory">
+        <p>
+          That first cosy meet…  
+          when everything felt soft, slow, and quietly perfect 💕
+        </p>
+        <img src="photo1.jpg" alt="First cosy meet">
+      </div>
+
+      <!-- Memory 2 -->
+      <div id="m2" class="hidden fade memory">
+        <p>
+          Our whiskey date 🥃  
+          laughs a little louder, hearts a little closer,  
+          and a night I’ll always smile about ❤️
+        </p>
+        <img src="photo2.jpg" alt="Whiskey date">
+      </div>
+
+      <!-- Memory 3 -->
+      <div id="m3" class="hidden fade memory">
+        <p>
+          This one… 🤫  
+          just two of us, one memory,  
+          and a secret the world will never know 💖
+        </p>
+        <img src="photo3.jpg" alt="Top secret">
       </div>
 
       <button onclick="showFinal()">One Last Thing 🎁</button>
     </div>
 
+    <!-- Final -->
     <div id="final" class="hidden fade box">
       <h2>Merry Christmas, Riyu 🎄❤️</h2>
       <p>
@@ -172,7 +202,7 @@
     function startExperience() {
       if (!musicStarted) {
         const music = document.getElementById("bgMusic");
-        music.volume = 0.4; // soft volume
+        music.volume = 0.4;
         music.play();
         musicStarted = true;
       }
@@ -183,34 +213,37 @@
       document.getElementById("gallery").style.display = "block";
     }
 
+    function showMemory(id) {
+      document.querySelectorAll(".memory").forEach(m => m.style.display = "none");
+      document.getElementById(id).style.display = "block";
+    }
+
     function showFinal() {
       document.getElementById("final").style.display = "block";
     }
 
-    /* Snowfall Animation */
+    /* Snowfall */
     const canvas = document.getElementById("snow");
     const ctx = canvas.getContext("2d");
-
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     let snowflakes = [];
 
-    function createSnowflakes() {
-      for (let i = 0; i < 120; i++) {
-        snowflakes.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 3 + 1,
-          d: Math.random() * 1 + 0.5
-        });
-      }
+    for (let i = 0; i < 120; i++) {
+      snowflakes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 3 + 1,
+        d: Math.random() * 1 + 0.5
+      });
     }
 
-    function drawSnowflakes() {
+    function animateSnow() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "rgba(255,255,255,0.9)";
       ctx.beginPath();
+
       snowflakes.forEach(flake => {
         ctx.moveTo(flake.x, flake.y);
         ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
@@ -220,12 +253,12 @@
           flake.x = Math.random() * canvas.width;
         }
       });
+
       ctx.fill();
-      requestAnimationFrame(drawSnowflakes);
+      requestAnimationFrame(animateSnow);
     }
 
-    createSnowflakes();
-    drawSnowflakes();
+    animateSnow();
 
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
