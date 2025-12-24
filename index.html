@@ -13,16 +13,25 @@
     body {
       margin: 0;
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-      color: white;
+      background: linear-gradient(180deg, #ff9a9e, #fad0c4, #fad0c4);
+      color: #ffffff;
       text-align: center;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
     .container {
+      position: relative;
+      z-index: 2;
       padding: 60px 20px;
-      max-width: 800px;
+      max-width: 850px;
       margin: auto;
     }
 
@@ -32,24 +41,26 @@
     }
 
     .subtitle {
-      font-size: 1.2em;
-      margin-bottom: 30px;
+      font-size: 1.25em;
+      margin-bottom: 35px;
+      opacity: 0.95;
     }
 
     button {
-      background: white;
-      color: #e75480;
+      background: #ffffff;
+      color: #ff5f7e;
       border: none;
-      padding: 14px 30px;
-      border-radius: 30px;
+      padding: 15px 32px;
+      border-radius: 35px;
       font-size: 1em;
       cursor: pointer;
-      margin-top: 20px;
-      transition: 0.3s ease;
+      margin-top: 25px;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
     button:hover {
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
     .hidden {
@@ -63,7 +74,7 @@
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(25px);
       }
       to {
         opacity: 1;
@@ -71,91 +82,68 @@
       }
     }
 
+    .box {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
     .photos {
       margin-top: 20px;
     }
 
     .photos img {
-      width: 200px;
+      width: 220px;
       max-width: 90%;
-      border-radius: 15px;
+      border-radius: 18px;
       margin: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     }
 
     .heart {
-      font-size: 2.5em;
+      font-size: 2.8em;
       margin-top: 20px;
     }
 
-    /* Snow Effect */
-    .snow::before {
-      content: "❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄";
-      position: fixed;
-      top: -10%;
-      left: 0;
-      width: 100%;
-      font-size: 22px;
-      animation: snow 12s linear infinite;
-      opacity: 0.8;
-      pointer-events: none;
-    }
-
-    @keyframes snow {
-      0% { top: -10%; }
-      100% { top: 100%; }
-    }
-
-    /* Floating Hearts */
-    body::after {
-      content: "❤️ 💕 ❤️ 💕 ❤️";
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 24px;
-      animation: floatUp 6s linear infinite;
-      opacity: 0.8;
-      pointer-events: none;
-    }
-
-    @keyframes floatUp {
-      0% { bottom: 0; opacity: 0; }
-      50% { opacity: 1; }
-      100% { bottom: 100%; opacity: 0; }
+    .signature {
+      margin-top: 25px;
+      font-size: 1.1em;
+      opacity: 0.95;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Optional background music -->
-  <!--
-  <audio autoplay loop>
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
-  -->
-
-  <div class="snow"></div>
+  <!-- Snowfall Canvas -->
+  <canvas id="snow"></canvas>
 
   <div class="container">
     <h1>Hey Riyu 🎄❤️</h1>
     <p class="subtitle">
-      This little corner of the internet is just for you, Riyanshi 💕
+      This little piece of the internet exists only because you exist in my life, Riyanshi 💕
     </p>
 
-    <button onclick="showMessage()">Click Me 💌</button>
+    <button onclick="showMessage()">Tap This 💌</button>
 
-    <div id="message" class="hidden fade">
+    <div id="message" class="hidden fade box">
       <p>
-        Riyu, you have a beautiful way of making everything feel right ✨  
-        Your smile, your voice, your presence — all of it means more to me than you know.
+        Riyu, you are my favorite notification,  
+        my calm in chaos, and my happiest coincidence ✨  
+        Loving you feels easy, warm, and right — always.
       </p>
-      <button onclick="showGallery()">Our Memories 📸</button>
+      <p>
+        Every day with you feels like a soft smile I never want to lose 💖
+      </p>
+      <button onclick="showGallery()">Our Little World 📸</button>
     </div>
 
-    <div id="gallery" class="hidden fade">
+    <div id="gallery" class="hidden fade box">
       <p>
-        Some of my favorite moments with my favorite person 💖
+        These moments may look small to the world,  
+        but to me — they mean everything 🥹❤️
       </p>
 
       <div class="photos">
@@ -167,17 +155,26 @@
       <button onclick="showFinal()">One Last Thing 🎁</button>
     </div>
 
-    <div id="final" class="hidden fade">
+    <div id="final" class="hidden fade box">
       <h2>Merry Christmas, Riyu 🎄❤️</h2>
       <p>
         Riyanshi, you’re not just someone I love —  
-        you’re my peace, my happiness, my home.
+        you’re my peace, my laughter, my safe place.
       </p>
       <p>
-        Thank you for being you.  
-        I can’t wait to create a lifetime of memories together 💕
+        No matter where life takes us,  
+        I promise to always choose you 💕
       </p>
+      <p>
+        Thank you for being my favorite part of every day.
+      </p>
+
       <div class="heart">❤️</div>
+
+      <div class="signature">
+        Forever yours,<br>
+        <strong>Ishaan</strong>
+      </div>
     </div>
   </div>
 
@@ -193,6 +190,61 @@
     function showFinal() {
       document.getElementById("final").style.display = "block";
     }
+
+    /* Snowfall Animation */
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let snowflakes = [];
+
+    function createSnowflakes() {
+      for (let i = 0; i < 120; i++) {
+        snowflakes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 3 + 1,
+          speed: Math.random() * 1 + 0.5
+        });
+      }
+    }
+
+    function drawSnowflakes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.beginPath();
+      for (let flake of snowflakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      moveSnowflakes();
+    }
+
+    function moveSnowflakes() {
+      for (let flake of snowflakes) {
+        flake.y += flake.speed;
+        if (flake.y > canvas.height) {
+          flake.y = 0;
+          flake.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function animateSnow() {
+      drawSnowflakes();
+      requestAnimationFrame(animateSnow);
+    }
+
+    createSnowflakes();
+    animateSnow();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 
 </body>
