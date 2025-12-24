@@ -33,15 +33,8 @@
       margin: auto;
     }
 
-    h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 1.25em;
-      margin-bottom: 35px;
-    }
+    h1 { font-size: 3em; margin-bottom: 10px; }
+    .subtitle { font-size: 1.25em; margin-bottom: 35px; }
 
     button {
       background: #ffffff;
@@ -56,14 +49,16 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
-    button:hover {
-      transform: scale(1.08);
-    }
-
+    button:hover { transform: scale(1.08); }
     .hidden { display: none; }
 
-    .fade {
-      animation: fadeIn 1.2s ease forwards;
+    .box {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      margin-top: 30px;
+      animation: fadeIn 1s ease;
     }
 
     @keyframes fadeIn {
@@ -71,200 +66,202 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .box {
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
-      margin-top: 30px;
-    }
-
+    /* MEMORY IMAGE */
     .memory img {
-      width: 240px;
+      width: 260px;
       max-width: 90%;
       border-radius: 18px;
       margin-top: 15px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      animation: sparklePop 0.8s ease;
     }
 
-    .heart {
-      font-size: 2.8em;
-      margin-top: 20px;
+    @keyframes sparklePop {
+      0% { transform: scale(0.8); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
     }
 
-    .signature {
-      margin-top: 25px;
-      font-size: 1.1em;
+    /* SPARKLES */
+    .sparkle {
+      position: absolute;
+      font-size: 18px;
+      animation: sparkle 1s ease forwards;
+      pointer-events: none;
     }
+
+    @keyframes sparkle {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-40px) scale(1.8); }
+    }
+
+    .hint {
+      font-size: 0.9em;
+      opacity: 0.85;
+      margin-top: 10px;
+    }
+
+    .heart { font-size: 2.8em; margin-top: 20px; }
+    .signature { margin-top: 25px; font-size: 1.1em; }
   </style>
 </head>
 
 <body>
 
-  <!-- Snowfall -->
-  <canvas id="snow"></canvas>
+<canvas id="snow"></canvas>
 
-  <!-- Music -->
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="container">
-    <h1>Hey Riyu 🎄❤️</h1>
-    <p class="subtitle">
-      This little piece of the internet exists only because you exist in my life, Riyanshi 💕
+<div class="container">
+  <h1>Hey Riyu 🎄❤️</h1>
+  <p class="subtitle">This little piece of the internet exists only because you exist in my life 💕</p>
+
+  <button onclick="startExperience()">Tap This 💌</button>
+
+  <div id="message" class="hidden box">
+    <p>
+      Riyu, you are my favorite notification,  
+      my calm in chaos, and my happiest coincidence ✨
     </p>
-
-    <button onclick="startExperience()">Tap This 💌</button>
-
-    <!-- Message -->
-    <div id="message" class="hidden fade box">
-      <p>
-        Riyu, you are my favorite notification,  
-        my calm in chaos, and my happiest coincidence ✨  
-        Loving you feels easy, warm, and right.
-      </p>
-      <p>
-        Every day with you feels like a soft smile I never want to lose 💖
-      </p>
-      <button onclick="showGallery()">Our Little World 📸</button>
-    </div>
-
-    <!-- Memories -->
-    <div id="gallery" class="hidden fade box">
-      <p>
-        These memories aren’t just pictures…  
-        they’re feelings I carry with me every day 🥹❤️
-      </p>
-
-      <button onclick="showMemory('m1')">Our First Cosy Meet ☕</button>
-      <button onclick="showMemory('m2')">That Whiskey Date 🥃</button>
-      <button onclick="showMemory('m3')">Top Secret 🤫</button>
-
-      <!-- Memory 1 -->
-      <div id="m1" class="hidden fade memory">
-        <p>
-          That first cosy meet…  
-          when everything felt soft, slow, and quietly perfect 💕
-        </p>
-        <img src="photo1.jpg" alt="First cosy meet">
-      </div>
-
-      <!-- Memory 2 -->
-      <div id="m2" class="hidden fade memory">
-        <p>
-          Our whiskey date 🥃  
-          laughs a little louder, hearts a little closer,  
-          and a night I’ll always smile about ❤️
-        </p>
-        <img src="photo2.jpg" alt="Whiskey date">
-      </div>
-
-      <!-- Memory 3 -->
-      <div id="m3" class="hidden fade memory">
-        <p>
-          This one… 🤫  
-          just two of us, one memory,  
-          and a secret the world will never know 💖
-        </p>
-        <img src="photo3.jpg" alt="Top secret">
-      </div>
-
-      <button onclick="showFinal()">One Last Thing 🎁</button>
-    </div>
-
-    <!-- Final -->
-    <div id="final" class="hidden fade box">
-      <h2>Merry Christmas, Riyu 🎄❤️</h2>
-      <p>
-        Riyanshi, you’re my peace, my laughter, my safe place.
-      </p>
-      <p>
-        No matter where life takes us,  
-        I promise to always choose you 💕
-      </p>
-      <p>
-        Thank you for being my favorite part of every day.
-      </p>
-
-      <div class="heart">❤️</div>
-
-      <div class="signature">
-        Forever yours,<br>
-        <strong>Ishaan</strong>
-      </div>
-    </div>
+    <button onclick="showGallery()">Our Little World 📸</button>
   </div>
 
-  <script>
-    let musicStarted = false;
+  <div id="gallery" class="hidden box" ontouchstart="touchStart(event)" ontouchend="touchEnd(event)">
+    <p id="memoryText"></p>
+    <div class="memory">
+      <img id="memoryImage" src="">
+    </div>
 
-    function startExperience() {
-      if (!musicStarted) {
-        const music = document.getElementById("bgMusic");
-        music.volume = 0.4;
-        music.play();
-        musicStarted = true;
-      }
-      document.getElementById("message").style.display = "block";
-    }
+    <div class="hint">⬅ Swipe left or right ➡</div>
 
-    function showGallery() {
-      document.getElementById("gallery").style.display = "block";
-    }
+    <button onclick="prevMemory()">⬅</button>
+    <button onclick="nextMemory()">➡</button>
 
-    function showMemory(id) {
-      document.querySelectorAll(".memory").forEach(m => m.style.display = "none");
-      document.getElementById(id).style.display = "block";
-    }
+    <button onclick="showFinal()">One Last Thing 🎁</button>
+  </div>
 
-    function showFinal() {
-      document.getElementById("final").style.display = "block";
-    }
+  <div id="final" class="hidden box">
+    <h2>Merry Christmas, Riyu 🎄❤️</h2>
+    <p>You’re my peace, my laughter, my safe place.</p>
+    <p>I promise to always choose you 💕</p>
+    <div class="heart">❤️</div>
+    <div class="signature">
+      Forever yours,<br><strong>Ishaan</strong>
+    </div>
+  </div>
+</div>
 
-    /* Snowfall */
-    const canvas = document.getElementById("snow");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+<script>
+/* MUSIC */
+let musicStarted = false;
+function startExperience() {
+  if (!musicStarted) {
+    const m = document.getElementById("bgMusic");
+    m.volume = 0.4;
+    m.play();
+    musicStarted = true;
+  }
+  document.getElementById("message").style.display = "block";
+}
 
-    let snowflakes = [];
+/* MEMORIES DATA */
+const memories = [
+  {
+    text: "Our first cosy meet ☕ — soft smiles, nervous laughs, and magic in the air 💕",
+    img: "photo1.jpg"
+  },
+  {
+    text: "That whiskey date 🥃 — louder laughs, closer hearts, unforgettable vibes ❤️",
+    img: "photo2.jpg"
+  },
+  {
+    text: "Top secret 🤫 — just two of us and a memory no one else will ever know 💖",
+    img: "photo3.jpg"
+  }
+];
 
-    for (let i = 0; i < 120; i++) {
-      snowflakes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 3 + 1,
-        d: Math.random() * 1 + 0.5
-      });
-    }
+let index = 0;
+let startX = 0;
 
-    function animateSnow() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(255,255,255,0.9)";
-      ctx.beginPath();
+function showGallery() {
+  document.getElementById("gallery").style.display = "block";
+  renderMemory();
+}
 
-      snowflakes.forEach(flake => {
-        ctx.moveTo(flake.x, flake.y);
-        ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
-        flake.y += flake.d;
-        if (flake.y > canvas.height) {
-          flake.y = 0;
-          flake.x = Math.random() * canvas.width;
-        }
-      });
+function renderMemory() {
+  document.getElementById("memoryText").innerText = memories[index].text;
+  document.getElementById("memoryImage").src = memories[index].img;
+  createSparkles();
+}
 
-      ctx.fill();
-      requestAnimationFrame(animateSnow);
-    }
+function nextMemory() {
+  index = (index + 1) % memories.length;
+  renderMemory();
+}
 
-    animateSnow();
+function prevMemory() {
+  index = (index - 1 + memories.length) % memories.length;
+  renderMemory();
+}
 
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  </script>
+/* TOUCH SWIPE */
+function touchStart(e) {
+  startX = e.changedTouches[0].screenX;
+}
+
+function touchEnd(e) {
+  let endX = e.changedTouches[0].screenX;
+  if (startX - endX > 50) nextMemory();
+  if (endX - startX > 50) prevMemory();
+}
+
+/* SPARKLES */
+function createSparkles() {
+  for (let i = 0; i < 6; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.innerText = "✨";
+    s.style.left = Math.random() * window.innerWidth + "px";
+    s.style.top = "50%";
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+  }
+}
+
+/* FINAL */
+function showFinal() {
+  document.getElementById("final").style.display = "block";
+}
+
+/* SNOW */
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+let flakes = Array.from({length:120},()=>({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  r:Math.random()*3+1,
+  d:Math.random()+0.5
+}));
+
+function snow() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="rgba(255,255,255,0.9)";
+  ctx.beginPath();
+  flakes.forEach(f=>{
+    ctx.moveTo(f.x,f.y);
+    ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+    f.y+=f.d;
+    if(f.y>canvas.height){f.y=0;f.x=Math.random()*canvas.width;}
+  });
+  ctx.fill();
+  requestAnimationFrame(snow);
+}
+snow();
+</script>
 
 </body>
 </html>
