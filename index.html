@@ -1,236 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Riyu ❤️</title>
 
-<title>Merry Christmas Riyu 🎄</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-<style>
-html {
-scroll-behavior: smooth;
-}
+    .container {
+      padding: 60px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
 
-body {
-margin: 0;
-font-family: 'Montserrat', sans-serif;
-background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
-color: #ffffff;
-overflow-x: hidden;
-}
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
 
-/* Scroll snap */
-.container {
-scroll-snap-type: y mandatory;
-}
+    .subtitle {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
 
-.section {
-min-height: 100vh;
-padding: 80px 20px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-scroll-snap-align: start;
-opacity: 0;
-transform: translateY(40px);
-transition: all 1s ease;
-}
+    button {
+      background: white;
+      color: #e75480;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s ease;
+    }
 
-.section.show {
-opacity: 1;
-transform: translateY(0);
-}
+    button:hover {
+      transform: scale(1.08);
+    }
 
-h1 {
-font-family: 'Playfair Display', serif;
-font-size: 2.6em;
-margin-bottom: 20px;
-}
+    .hidden {
+      display: none;
+    }
 
-p {
-font-size: 1.15em;
-max-width: 700px;
-line-height: 1.9;
-text-align: center;
-}
+    .fade {
+      animation: fadeIn 1.2s ease forwards;
+    }
 
-/* Start Screen */
-#startScreen {
-position: fixed;
-inset: 0;
-background: linear-gradient(180deg, #0f2027, #203a43);
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-z-index: 999;
-}
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-#startScreen button {
-padding: 14px 36px;
-border-radius: 40px;
-border: none;
-background: #e63946;
-color: #fff;
-font-size: 1.1em;
-margin-top: 25px;
-}
+    .photos {
+      margin-top: 20px;
+    }
 
-/* Floating */
-.floating {
-position: fixed;
-top: -10px;
-pointer-events: none;
-animation: fall linear infinite;
-}
+    .photos img {
+      width: 200px;
+      max-width: 90%;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
 
-@keyframes fall {
-to {
-transform: translateY(110vh);
-}
-}
+    .heart {
+      font-size: 2.5em;
+      margin-top: 20px;
+    }
 
-/* Secret */
-.secret-btn {
-margin-top: 30px;
-padding: 14px 28px;
-border-radius: 30px;
-border: 1px solid #fff;
-background: transparent;
-color: #fff;
-font-size: 1em;
-}
+    /* Snow Effect */
+    .snow::before {
+      content: "❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄ ❄";
+      position: fixed;
+      top: -10%;
+      left: 0;
+      width: 100%;
+      font-size: 22px;
+      animation: snow 12s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
+    }
 
-.secret {
-display: none;
-margin-top: 25px;
-font-size: 1.2em;
-color: #ffd6e0;
-}
+    @keyframes snow {
+      0% { top: -10%; }
+      100% { top: 100%; }
+    }
 
-audio {
-display: none;
-}
-</style>
+    /* Floating Hearts */
+    body::after {
+      content: "❤️ 💕 ❤️ 💕 ❤️";
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { bottom: 0; opacity: 0; }
+      50% { opacity: 1; }
+      100% { bottom: 100%; opacity: 0; }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- START -->
-<div id="startScreen">
-<h1>🎄 For Riyu 🎄</h1>
-<p>A little Christmas surprise made with love</p>
-<button onclick="start()">Tap to begin</button>
-</div>
+  <!-- Optional background music -->
+  <!--
+  <audio autoplay loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+  -->
 
-<audio id="music" loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
+  <div class="snow"></div>
 
-<div class="container">
+  <div class="container">
+    <h1>Hey Riyu 🎄❤️</h1>
+    <p class="subtitle">
+      This little corner of the internet is just for you, Riyanshi 💕
+    </p>
 
-<!-- SECTION 1 -->
-<div class="section">
-<h1>Merry Christmas, Riyanshi</h1>
-<p>
-Dear Santa,<br><br>
-Everyone asks for gifts this season…<br>
-I didn’t.<br>
-Because I already received mine<br>
-the day <strong>Riyu</strong> came into my life ❤️
-</p>
-</div>
+    <button onclick="showMessage()">Click Me 💌</button>
 
-<!-- SECTION 2 -->
-<div class="section">
-<p>
-You are my calm after long days,<br>
-my smile without effort,<br>
-and the thought I return to<br>
-every single night 🌙
-</p>
-</div>
+    <div id="message" class="hidden fade">
+      <p>
+        Riyu, you have a beautiful way of making everything feel right ✨  
+        Your smile, your voice, your presence — all of it means more to me than you know.
+      </p>
+      <button onclick="showGallery()">Our Memories 📸</button>
+    </div>
 
-<!-- SECTION 3 -->
-<div class="section">
-<p>
-Loving you feels like winter wrapped in warmth —<br>
-soft, magical, and quiet in the best way ✨
-</p>
-</div>
+    <div id="gallery" class="hidden fade">
+      <p>
+        Some of my favorite moments with my favorite person 💖
+      </p>
 
-<!-- SECTION 4 -->
-<div class="section">
-<h1>A Promise</h1>
-<p>
-No matter how busy life gets,<br>
-no matter where we stand tomorrow,<br><br>
-I choose you.<br>
-Not once.<br>
-But always.
-</p>
-</div>
+      <div class="photos">
+        <img src="photo1.jpg" alt="Us">
+        <img src="photo2.jpg" alt="Memories">
+        <img src="photo3.jpg" alt="Forever">
+      </div>
 
-<!-- SECRET -->
-<div class="section">
-<h1>One Last Thing</h1>
-<button class="secret-btn" onclick="reveal()">Tap to reveal</button>
-<div class="secret" id="secret">
-I don’t need Christmas lights,<br>
-because you already brighten<br>
-every corner of my life 🧿❤️<br><br>
-You are my forever.
-</div>
-</div>
+      <button onclick="showFinal()">One Last Thing 🎁</button>
+    </div>
 
-<!-- END -->
-<div class="section">
-<h1>🎄</h1>
-<p>
-Merry Christmas, my love.<br><br>
-— Yours, always
-</p>
-</div>
+    <div id="final" class="hidden fade">
+      <h2>Merry Christmas, Riyu 🎄❤️</h2>
+      <p>
+        Riyanshi, you’re not just someone I love —  
+        you’re my peace, my happiness, my home.
+      </p>
+      <p>
+        Thank you for being you.  
+        I can’t wait to create a lifetime of memories together 💕
+      </p>
+      <div class="heart">❤️</div>
+    </div>
+  </div>
 
-</div>
+  <script>
+    function showMessage() {
+      document.getElementById("message").style.display = "block";
+    }
 
-<script>
-function start() {
-document.getElementById("startScreen").style.display = "none";
-document.getElementById("music").play();
-}
+    function showGallery() {
+      document.getElementById("gallery").style.display = "block";
+    }
 
-/* Scroll animation */
-const sections = document.querySelectorAll('.section');
-const observer = new IntersectionObserver(entries => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-entry.target.classList.add('show');
-}
-});
-}, { threshold: 0.2 });
-
-sections.forEach(sec => observer.observe(sec));
-
-/* Floating snow + hearts */
-for (let i = 0; i < 40; i++) {
-let f = document.createElement("div");
-f.className = "floating";
-f.innerHTML = Math.random() > 0.6 ? "❤️" : "❄️";
-f.style.left = Math.random() * 100 + "vw";
-f.style.animationDuration = (6 + Math.random() * 6) + "s";
-f.style.fontSize = (12 + Math.random() * 20) + "px";
-document.body.appendChild(f);
-}
-
-/* Secret */
-function reveal() {
-document.getElementById("secret").style.display = "block";
-}
-</script>
+    function showFinal() {
+      document.getElementById("final").style.display = "block";
+    }
+  </script>
 
 </body>
 </html>
